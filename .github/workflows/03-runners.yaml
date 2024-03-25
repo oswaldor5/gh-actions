@@ -1,4 +1,4 @@
-name: Workflow Runners
+name: 03 - Runners Workflow
 
 on:
   workflow_dispatch:
