@@ -15,7 +15,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Show OS
-        shell: bash
+        shell: bash # To use Linux commands on Windows
         run: |
           echo "This job is running on a Windows runner."
           echo "Runner OS: $RUNNER_OS"
