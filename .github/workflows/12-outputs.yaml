@@ -1,0 +1,37 @@
+name: 12 - Working with Outputs
+
+on:
+    workflow_dispatch:
+        inputs:
+            build-status:
+                type: choice
+                options:
+                    - success
+                    - failure
+                default: success
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        # 3. Mention the outputs in the outputs section of the job
+        outputs:
+            build-status: ${{ steps.build.outputs.status }}
+        steps:
+            - name: Print GITHUB_OUTPUT path
+              run: echo "$GITHUB_OUTPUT"
+            - name: Build
+              # 1. Define a step ID for the steps that produce output
+              id: build
+              # 2. Echo key-value pairs to the $GITHUB_OUTPUT variable
+              run: echo "status=${{ inputs.build-status }}" >> "$GITHUB_OUTPUT"
+              # Appending values to a file in bash
+              #     To append values to a file, we can use the following syntax: echo "<line content>" >> "<file path>"
+    deploy:
+        runs-on: ubuntu-latest
+        # 4. List the job as a dependency of jobs that need the output
+        needs: build
+        # 5. Access the output via the needs context
+        if: ${{ needs.build.outputs.build-status == 'success' }}
+        steps:
+            - name: Deploy
+              run: echo "Deploying"
