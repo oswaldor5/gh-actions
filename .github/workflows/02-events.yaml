@@ -1,16 +1,16 @@
 name: 02 - Events Workflow
 
 on:
-  # push:
-  pull_request:
-  # schedule:
-  # https://crontab.cronhub.io/
-  # - cron: "*/5 * * * *"
-  workflow_dispatch:
+    # push:
+    pull_request:
+    # schedule:
+    # https://crontab.cronhub.io/
+    # - cron: "*/5 * * * *"
+    workflow_dispatch:
 
 jobs:
-  echo-event_name:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Show the trigger
-        run: echo "I've been triggered by a(n) ${{ github.event_name }} event." # github context
+    echo-event_name:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Show the trigger
+              run: echo "I've been triggered by a(n) ${{ github.event_name }} event." # github context

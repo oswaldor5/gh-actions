@@ -7,29 +7,29 @@ name: 07 - Expressions
 run-name: 07 - Using Expressions | DEBUG - ${{ inputs.debug && 'ON' || 'OFF' }}
 
 on:
-  workflow_dispatch:
-    inputs:
-      debug:
-        type: boolean
-        default: false
+    workflow_dispatch:
+        inputs:
+            debug:
+                type: boolean
+                default: false
 
 jobs:
-  echo:
-    runs-on: ubuntu-latest
-    steps:
-      - name: "[debug] Print start-up data"
-        # To execute jobs and steps conditionally, we can leverage the if keyword in either the job or the step definition.
-        # Already evaluated as an expression (does not need ${{}})
-        if: inputs.debug
-        run: |
-          echo "Triggered by: ${{ github.event_name }}"
-          echo "Branch: ${{ github.ref }}"
-          echo "Commit SHA: ${{ github.sha }}"
-          echo "Runner OS: ${{ runner.os }}"
-      - name: "[debug] Print when triggered from main"
-        # # To execute jobs and steps conditionally, we can leverage the if keyword in either the job or the step definition.
-        # Already evaluated as an expression (does not need ${{}})
-        if: inputs.debug && github.ref == 'refs/heads/main'
-        run: echo "I was triggered from main"
-      - name: Greeting
-        run: echo "Hello, world"
+    echo:
+        runs-on: ubuntu-latest
+        steps:
+            - name: "[debug] Print start-up data"
+              # To execute jobs and steps conditionally, we can leverage the if keyword in either the job or the step definition.
+              # Already evaluated as an expression (does not need ${{}})
+              if: inputs.debug
+              run: |
+                  echo "Triggered by: ${{ github.event_name }}"
+                  echo "Branch: ${{ github.ref }}"
+                  echo "Commit SHA: ${{ github.sha }}"
+                  echo "Runner OS: ${{ runner.os }}"
+            - name: "[debug] Print when triggered from main"
+              # # To execute jobs and steps conditionally, we can leverage the if keyword in either the job or the step definition.
+              # Already evaluated as an expression (does not need ${{}})
+              if: inputs.debug && github.ref == 'refs/heads/main'
+              run: echo "I was triggered from main"
+            - name: Greeting
+              run: echo "Hello, world"

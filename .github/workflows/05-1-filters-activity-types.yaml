@@ -1,17 +1,17 @@
 name: 05 - 1 - Event Filters and Activity Types
 
 on:
-  pull_request:
-    # Activity Types: Specify which types of certain triggers execute our workflow.
-    types:
-      - opened
-      - synchronize
-    # Event Filters: Specify under which conditions a specific event triggers our workflow.
-    branches:
-      - main
+    pull_request:
+        # Activity Types: Specify which types of certain triggers execute our workflow.
+        types:
+            - opened
+            - synchronize
+        # Event Filters: Specify under which conditions a specific event triggers our workflow.
+        branches:
+            - main
 
 jobs:
-  echo:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Running whenever a PR is opened or synchronized AND base branch is main"
+    echo:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "Running whenever a PR is opened or synchronized AND base branch is main"

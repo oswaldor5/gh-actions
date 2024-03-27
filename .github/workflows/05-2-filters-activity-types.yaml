@@ -1,16 +1,16 @@
 name: 05 - 2 - Event Filters and Activity Types
 
 on:
-  pull_request:
-    # Activity Types: Specify which types of certain triggers execute our workflow.
-    types:
-      - closed
-    # Event Filters: Specify under which conditions a specific event triggers our workflow.
-    branches:
-      - main
+    pull_request:
+        # Activity Types: Specify which types of certain triggers execute our workflow.
+        types:
+            - closed
+        # Event Filters: Specify under which conditions a specific event triggers our workflow.
+        branches:
+            - main
 
 jobs:
-  echo:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Running whenever a PR is closed"
+    echo:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "Running whenever a PR is closed"
