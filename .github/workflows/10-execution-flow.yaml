@@ -9,6 +9,8 @@ on:
                 default: true
 
 jobs:
+    # Every job gets its own runner and runs in parallel if "needs" is not used
+
     lint-build:
         runs-on: ubuntu-latest
         steps:
