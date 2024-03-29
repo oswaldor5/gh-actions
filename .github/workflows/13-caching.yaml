@@ -36,15 +36,15 @@ jobs:
               with:
                   node-version: ${{ inputs.node-version }}
             - name: Download cached dependencies
+              id: cache-npm
               uses: actions/cache@v4
               if: ${{ inputs.use-cache }}
-              id: cache
               with:
                   path: 13-caching/react-app/node_modules
                   key: deps-node-modules-${{ hashFiles('13-caching/react-app/package-lock.json') }}
             # 2. Install dependencies
             - name: Install dependencies
-              if: ${{ steps.cache.outputs.cache-hit != true }}
+              if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
               run: npm ci
             # 3. Unit testing and building
             - name: Testing
