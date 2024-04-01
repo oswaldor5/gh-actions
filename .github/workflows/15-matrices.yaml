@@ -1,0 +1,32 @@
+name: 15 - Working with Matrices
+
+on:
+    workflow_dispatch:
+
+jobs:
+    backwards-compatibility:
+        name: ${{ matrix.os}}-${{ matrix.node-version }}
+        runs-on: ${{ matrix.os }}
+        strategy:
+            # Setting fail-fast to false prevents GitHub from canceling all in-progress jobs if any matrix job fails. Default: true
+            fail-fast: false
+            matrix:
+                node-version: [18.x, 20.x, 21.x]
+                os:
+                    - ubuntu-latest
+                    - windows-latest
+                include:
+                    # Add a new ubuntu-latest/16.x pair only (not for windows-latest)
+                    - os: ubuntu-latest
+                      node-version: 16.x
+                    # Add a new ubuntu-latest/21.x/experimental combination only (not for windows-latest)
+                    - os: ubuntu-latest
+                      node-version: 21.x
+                      tag: experimental
+        steps:
+            - name: Setup node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - name: Perform some tests
+              run: echo "Running tests on OS ${{ matrix.os }} and NodeJS ${{ matrix.node-version }}"
