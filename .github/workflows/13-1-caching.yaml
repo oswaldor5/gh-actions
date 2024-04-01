@@ -1,6 +1,6 @@
 name: 13-1 - Using Caching
 
-# $ cd 13-cahing
+# $ cd 13-caching
 # $ npx create-react-app --template typescript react-app
 # $ cd react-app
 # $ npm run start
@@ -24,6 +24,7 @@ on:
 jobs:
     install-deps:
         runs-on: ubuntu-latest
+        # The working-directory option set as default at the job level applies only to run commands.
         defaults:
             run:
                 working-directory: 13-caching/react-app
@@ -57,6 +58,7 @@ jobs:
     build:
         runs-on: ubuntu-latest
         needs: install-deps
+        # The working-directory option set as default at the job level applies only to run commands.
         defaults:
             run:
                 working-directory: 13-caching/react-app

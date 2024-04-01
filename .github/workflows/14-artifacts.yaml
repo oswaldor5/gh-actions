@@ -1,0 +1,63 @@
+name: 14 - Working with Artifacts
+
+# $ cd 14-artifacts
+# $ npx create-react-app --template typescript react-app
+# $ cd react-app
+# $ npm run start
+
+on:
+    workflow_dispatch:
+
+env:
+    build-artifact-key: app-${{ github.sha }}
+    test-coverage-key: test-coverage-${{ github.sha }}
+
+jobs:
+    test-build:
+        runs-on: ubuntu-latest
+        defaults:
+            run:
+                # The working-directory option set as default at the job level applies only to run commands.
+                working-directory: 14-artifacts/react-app
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Setup node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20.x
+            - name: Download cached dependencies
+              id: cache-npm
+              uses: actions/cache@v4
+              with:
+                  path: 14-artifacts/react-app/node_modules
+                  key: deps-node-modules-${{ hashFiles('14-artifacts/react-app/package-lock.json') }}
+            # Use 'true' instead of true
+            - name: Install dependencies
+              if: ${{ steps.cache-npm.outputs.cache-hit != 'true' }}
+              run: npm ci
+            - name: Unit tests
+              run: npm run test -- --coverage
+            - name: Upload test results
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ${{ env.test-coverage-key }}
+                  path: 14-artifacts/react-app/coverage
+            - name: Build code
+              run: npm run build
+            - name: Upload build files
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ${{ env.build-artifact-key }}
+                  path: 14-artifacts/react-app/build
+    deploy:
+        runs-on: ubuntu-latest
+        needs: test-build
+        steps:
+            - name: Download build files
+              uses: actions/download-artifact@v4
+              with:
+                  name: ${{ env.build-artifact-key }}
+                  path: build # 14-artifacts/react-app/build
+            - name: Show folder structure
+              run: ls -R
