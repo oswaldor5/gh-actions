@@ -1,0 +1,23 @@
+name: 15-1 - Working with Matrices
+
+on:
+    workflow_dispatch:
+
+jobs:
+    include-example:
+        name: ${{ matrix.color }}-${{ matrix.shape }}-${{ matrix.size }}-${{ matrix.opacity }}
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                color: [red, green]
+                shape: [circle, square]
+                size: [small, large]
+                include:
+                    # Added to every entry of the matrix [e.g. red-circle-small-50, green-circle-large-50]
+                    - opacity: 50
+                    # Add a new red/triangle combination w/o size value
+                    - color: red
+                      shape: triangle
+        steps:
+            - name: Print
+              run: echo "${{ matrix.color }}-${{ matrix.shape }}-${{ matrix.size }}-${{ matrix.opacity }}"
