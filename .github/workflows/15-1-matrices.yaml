@@ -18,6 +18,12 @@ jobs:
                     # Add a new red/triangle combination w/o size value
                     - color: red
                       shape: triangle
+                # Processed before "include"
+                exclude:
+                    - color: red
+                      shape: circle
+                      size: small
+                      # opacity: 50 not included as it does not exist at this moment
         steps:
             - name: Print
               run: echo "${{ matrix.color }}-${{ matrix.shape }}-${{ matrix.size }}-${{ matrix.opacity }}"
