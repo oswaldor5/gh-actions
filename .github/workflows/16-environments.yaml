@@ -8,6 +8,7 @@ on:
                 type: environment
                 default: staging
 
+# Environment variables are available in the vars context, while secrets are available in the secrets context.
 jobs:
     echo:
         runs-on: ubuntu-latest
