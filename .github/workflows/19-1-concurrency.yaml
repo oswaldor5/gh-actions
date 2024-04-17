@@ -3,14 +3,17 @@ name: 19 - 1 - Managing Concurrency
 on:
     workflow_dispatch:
 
+# The concurrency group must be unique across workflows to prevent canceling runs from other workflows.
+# - Also ensure you turn the cancel-in-progress flag off for deployments.
+# - Not case-sensitive.
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-    ping:
+    sleep:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
             - name: Sleep
-              run: sleep 30
+              run: sleep 60

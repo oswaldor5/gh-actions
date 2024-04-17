@@ -1,0 +1,22 @@
+name: 19 - 2 - Managing Concurrency
+
+on:
+    workflow_dispatch:
+
+jobs:
+    sleep-with-concurrency:
+        runs-on: ubuntu-latest
+        concurrency:
+            group: ${{ github.workflow }}-${{ github.ref }}
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Sleep
+              run: sleep 60
+    sleep-without-concurrency:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Sleep
+              run: sleep 30
